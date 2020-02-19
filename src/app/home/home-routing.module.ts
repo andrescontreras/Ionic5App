@@ -14,7 +14,7 @@ const routes: Routes = [
           import('../pages/folder/folder.module').then(m => m.FolderPageModule)
       },
       {
-        path: 'bienvenida',
+        path: '',
         loadChildren: () =>
           import('../pages/bienvenida/bienvenida.module').then(
             m => m.BienvenidaPageModule
@@ -33,7 +33,8 @@ const routes: Routes = [
           import('../pages/detalle/detalle.module').then(
             m => m.DetallePageModule
           )
-      }
+      },
+      { path: '', redirectTo: 'home/folder/inbox', pathMatch: 'full' }
     ]
   }
 ];

@@ -9,11 +9,9 @@ const routes: Routes = [
     component: IndexPage,
     children: [
       {
-        path: 'bienvenida',
+        path: '',
         loadChildren: () =>
-          import('../pages/bienvenida/bienvenida.module').then(
-            m => m.BienvenidaPageModule
-          )
+          import('../pages/login/login.module').then(m => m.LoginPageModule)
       },
       {
         path: 'login',
@@ -21,11 +19,23 @@ const routes: Routes = [
           import('../pages/login/login.module').then(m => m.LoginPageModule)
       },
       {
+        path: 'bienvenida',
+        loadChildren: () =>
+          import('../pages/bienvenida/bienvenida.module').then(
+            m => m.BienvenidaPageModule
+          )
+      },
+      {
         path: 'signup',
         loadChildren: () =>
           import('../pages/signup/signup.module').then(m => m.SignupPageModule)
       }
     ]
+  },
+  {
+    path: '',
+    redirectTo: '/index/login',
+    pathMatch: 'full'
   }
 ];
 
