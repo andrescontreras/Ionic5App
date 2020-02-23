@@ -34,6 +34,13 @@ const routes: Routes = [
             m => m.DetallePageModule
           )
       },
+      {
+        path: 'account',
+        loadChildren: () =>
+          import('../pages/account/account.module').then(
+            m => m.AccountPageModule
+          )
+      },
       { path: '', redirectTo: 'home/folder/inbox', pathMatch: 'full' }
     ]
   }

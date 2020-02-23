@@ -28,12 +28,12 @@ export class AuthInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const headerName = 'Authorization';
     const token = sessionStorage.getItem('Token');
-    if (request.url === `${this.baseUrl}signin`) {
+    if (request.url === `${this.baseUrl}auth/login/`) {
       return next.handle(request);
     }
     if (token !== null && !request.headers.has(headerName)) {
       request = request.clone({
-        headers: request.headers.set(headerName, 'Token ' + token)
+        headers: request.headers.set(headerName, 'Bearer  ' + token)
       });
     }
 

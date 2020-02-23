@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { from } from 'rxjs';
+import { from, throwError } from 'rxjs';
 import { UserCreation, User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { ToastService } from 'src/app/services/toast.service';
+import { catchError, map, tap } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,31 +15,76 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.page.scss']
 })
 export class SignupPage implements OnInit {
-  user: UserCreation;
-  constructor(private loginService: LoginService, private router: Router) {}
+  user: UserCreation = new UserCreation();
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private toastService: ToastService,
+    private spinner: NgxSpinnerService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.user = new UserCreation();
+    this.user.username = 'andres';
+    this.user.email = 'andres@email.com';
+    this.user.password1 = 'Af123456';
+    this.user.password2 = 'Af123456';
   }
 
   createAccount = async () => {
     if (!this.validateData()) {
       console.log('Errror');
+      this.toastService.presentError('Los datos ingresados son invalidos');
+      return;
     }
-    const user = new User();
-    user.username = this.user.user;
-    user.password = this.user.password;
+
     console.log('Correcto');
-    // const response = await this.loginService.registration(user).toPromise();
-    this.router.navigate(['index/login']);
+    this.spinner.show();
+    const response = await this.loginService
+      .registration(this.user)
+      .pipe(catchError(this.handleError))
+      .toPromise();
+
+    this.spinner.hide();
+    this.toastService.presentSuccess('Account created successfully');
+    sessionStorage.setItem('User', this.user.username);
+    this.authService.loginProccess(response);
+
+    console.log(response);
+
+    //this.router.navigate(['index/login']);
   };
 
   validateData = () => {
     return (
-      this.user.user.trim() &&
-      this.user.password.trim() &&
-      this.user.confirmPassword.trim() &&
-      this.user.password.trim() === this.user.confirmPassword.trim()
+      this.user.username.trim() &&
+      this.user.password1.trim() &&
+      this.user.password2.trim() &&
+      this.user.password1.trim() === this.user.password2.trim()
     );
+  };
+
+  handleError = (error: any) => {
+    if (error.status !== 400) {
+      return throwError('Innesperate error');
+    }
+
+    const stringError = this.generateErrorMessage(error);
+    this.toastService.presentError(stringError);
+    this.spinner.hide();
+    return throwError(stringError);
+  };
+
+  generateErrorMessage = error => {
+    const keys = Object.keys(error.error);
+    // recorrer todas las llaves y concatenar sus respectivos mensajes
+    let stringError = '';
+    keys.forEach(key => {
+      stringError =
+        stringError +
+        error.error[key].reduce((message, item) => message + '\n' + item) +
+        '\n';
+    });
+    return stringError;
   };
 }

@@ -2,8 +2,10 @@
   <ion-menu contentId="main-content" type="overlay">
     <ion-content>
       <ion-list id="inbox-list">
-        <ion-list-header>Inbox</ion-list-header>
-        <ion-note>hi@ionicframework.com</ion-note>
+        <div routerDirection="root" routerLink="account">
+          <ion-list-header>To-Do</ion-list-header>
+          <ion-note>hi@ionicframework.com</ion-note>
+        </div>
 
         <ion-menu-toggle
           auto-hide="false"

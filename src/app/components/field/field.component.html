@@ -1,0 +1,9 @@
+<ion-item>
+  <ion-label position="floating">{{ field.title }}</ion-label>
+  <ion-input
+    [(ngModel)]="field.value"
+    [name]="field.atribute"
+    [inputmode]="field.inputmode"
+    (change)="onInputChange($event)"
+  ></ion-input>
+</ion-item>

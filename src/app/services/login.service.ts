@@ -14,39 +14,49 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  registration(user: User): Observable<any> {
+  registration(user: UserCreation): Observable<any> {
     const url = this.baseUrl + 'auth/registration/';
     const headers = this.GetHttpHeaders().set(
       'Content-Type',
       'application/json'
     );
     return this.http.post(url, user, {
-      withCredentials: true,
       headers,
       observe: 'response'
     });
   }
 
   login(user: User): Observable<any> {
-    const url = this.baseUrl + '/auth/login/';
+    const url = this.baseUrl + 'auth/login/';
     const headers = this.GetHttpHeaders().set(
       'Content-Type',
       'application/json'
     );
     return this.http.post(url, user, {
-      withCredentials: true,
       headers,
       observe: 'response'
     });
   }
+
+  changePassword(user: User): Observable<any> {
+    const url = this.baseUrl + 'password/change/';
+    const headers = this.GetHttpHeaders().set(
+      'Content-Type',
+      'application/json'
+    );
+    return this.http.post(url, user, {
+      headers,
+      observe: 'response'
+    });
+  }
+
   logout(): Observable<any> {
-    const url = this.baseUrl + '/auth/logout/';
+    const url = this.baseUrl + 'auth/logout/';
     const headers = this.GetHttpHeaders().set(
       'Content-Type',
       'application/json'
     );
     return this.http.post(url, {
-      withCredentials: true,
       observe: 'response'
     });
   }

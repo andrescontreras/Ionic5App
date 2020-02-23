@@ -1,12 +1,22 @@
 export class UserCreation {
   constructor(
-    public name: string = '',
-    public user: string = '',
-    public password: string = '',
-    public confirmPassword: string = ''
+    public email: string = '',
+    public username: string = '',
+    public password1: string = '',
+    public password2: string = ''
   ) {}
 }
 
 export class User {
   constructor(public username: string = '', public password: string = '') {}
+}
+
+export class UserAccount {
+  constructor(
+    public username: string = '',
+    public first_name: string = '',
+    public last_name: string = '',
+    public email: string = '',
+    public phone_number: string = ''
+  ) {}
 }

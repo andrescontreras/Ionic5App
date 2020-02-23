@@ -6,6 +6,7 @@ import { Usuario } from '../models/usuario';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
+import { ToastService } from './toast.service';
 
 const ERROR_LOGIN = 'Usuario o contraseña invalida';
 @Injectable({
@@ -18,27 +19,34 @@ export class AuthService {
 
   constructor(
     private loginService: LoginService,
-    private router: Router // private modalService: NgbModal
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   login(user: User) {
     return this.loginService.login(user).pipe(
       map(response => {
-        sessionStorage.setItem('User', response.body.user.username);
-        sessionStorage.setItem('Token', response.body.token);
-        this.isLoggedIn = true;
-      })
-      // catchError(this.handleError)
+        sessionStorage.setItem('User', user.username);
+        this.loginProccess(response);
+      }),
+      catchError(this.handleError)
     );
   }
 
-  handleError(error: any) {
-    if (error.status === 401) {
-      this.openModal(ERROR_LOGIN);
+  loginProccess = response => {
+    sessionStorage.setItem('Token', response.body.key);
+    this.isLoggedIn = true;
+    this.router.navigate(['/home']);
+  };
+
+  handleError = (error: any) => {
+    if (error.status === 400) {
+      this.toastService.presentError(ERROR_LOGIN);
+      console.log('ERRROR');
     }
 
     return throwError('devMessage');
-  }
+  };
 
   logout() {
     return this.loginService.logout().pipe(

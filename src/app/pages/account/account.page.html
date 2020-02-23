@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>account</ion-title>
+    <ion-buttons slot="start"> </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveData()">
+        <ion-icon name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-field-list [fields]="fields" [object]="user"></app-field-list>
+</ion-content>

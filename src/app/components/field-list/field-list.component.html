@@ -1,0 +1,8 @@
+<p>
+  field-list works!
+</p>
+<ion-list>
+  <ng-container *ngFor="let f of fields">
+    <app-field [field]="f" (fieldChange)="fieldChange($event)"> </app-field>
+  </ng-container>
+</ion-list>

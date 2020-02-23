@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,17 +13,17 @@ export class HomePage implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Inbox',
+      title: 'Pending',
       url: '/folder/Inbox',
       icon: 'mail'
     },
     {
-      title: 'Outbox',
+      title: 'Overdue',
       url: '/listado',
       icon: 'paper-plane'
     },
     {
-      title: 'Favorites',
+      title: 'Finished',
       url: '/folder/Favorites',
       icon: 'heart'
     },
@@ -47,7 +48,8 @@ export class HomePage implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -67,5 +69,9 @@ export class HomePage implements OnInit {
     //     page => page.title.toLowerCase() === path.toLowerCase()
     //   );
     // }
+  }
+
+  account() {
+    this.router.navigate(['home/account']);
   }
 }
