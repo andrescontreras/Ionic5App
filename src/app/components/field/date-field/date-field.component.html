@@ -1,0 +1,9 @@
+<ion-item [disabled]="field.disabled">
+  <ion-label position="floating">{{ field.title }}</ion-label>
+  <ion-datetime
+    displayFormat="DD/MM/YYYY"
+    [(ngModel)]="field.value"
+    [name]="field.atribute"
+    (ionChange)="onInputChange($event)"
+  ></ion-datetime>
+</ion-item>

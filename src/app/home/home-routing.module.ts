@@ -10,38 +10,25 @@ const routes: Routes = [
     children: [
       {
         path: 'folder/:id',
-        loadChildren: () =>
-          import('../pages/folder/folder.module').then(m => m.FolderPageModule)
+        loadChildren: () => import('../pages/folder/folder.module').then(m => m.FolderPageModule)
       },
       {
         path: '',
-        loadChildren: () =>
-          import('../pages/bienvenida/bienvenida.module').then(
-            m => m.BienvenidaPageModule
-          )
+        loadChildren: () => import('../pages/bienvenida/bienvenida.module').then(m => m.BienvenidaPageModule)
       },
       {
-        path: 'listado',
-        loadChildren: () =>
-          import('../pages/listado/listado.module').then(
-            m => m.ListadoPageModule
-          )
+        path: 'listado/:id',
+        loadChildren: () => import('../pages/listado/listado.module').then(m => m.ListadoPageModule)
       },
       {
-        path: 'detalle',
-        loadChildren: () =>
-          import('../pages/detalle/detalle.module').then(
-            m => m.DetallePageModule
-          )
+        path: 'detalle/:id',
+        loadChildren: () => import('../pages/detalle/detalle.module').then(m => m.DetallePageModule)
       },
       {
         path: 'account',
-        loadChildren: () =>
-          import('../pages/account/account.module').then(
-            m => m.AccountPageModule
-          )
+        loadChildren: () => import('../pages/account/account.module').then(m => m.AccountPageModule)
       },
-      { path: '', redirectTo: 'home/folder/inbox', pathMatch: 'full' }
+      { path: '', redirectTo: 'home/listado/pending', pathMatch: 'full' }
     ]
   }
 ];

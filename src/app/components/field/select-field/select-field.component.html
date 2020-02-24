@@ -1,0 +1,8 @@
+<ion-item [disabled]="field.disabled">
+  <ion-label position="floating">{{ field.title }}</ion-label>
+  <ion-select [selectedText]="selected.value" [value]="field.value" (ionChange)="onInputChange($event)">
+    <ng-container *ngFor="let o of options; index">
+      <ion-select-option [value]="o.id">{{ o.value }}</ion-select-option>
+    </ng-container>
+  </ion-select>
+</ion-item>

@@ -1,9 +1,23 @@
-<ion-item>
-  <ion-label position="floating">{{ field.title }}</ion-label>
-  <ion-input
-    [(ngModel)]="field.value"
-    [name]="field.atribute"
-    [inputmode]="field.inputmode"
-    (change)="onInputChange($event)"
-  ></ion-input>
-</ion-item>
+<div>
+  <ng-container *ngTemplateOutlet="itemTemplateRef"></ng-container>
+</div>
+
+<ng-template #text>
+  <ion-item [disabled]="field.disabled">
+    <ion-label position="floating">{{ field.title }}</ion-label>
+    <ion-input
+      [(ngModel)]="field.value"
+      [name]="field.atribute"
+      [inputmode]="field.inputmode"
+      (change)="onInputChange($event)"
+    ></ion-input>
+  </ion-item>
+</ng-template>
+
+<ng-template #date>
+  <app-date-field [field]="field" (fieldChange)="onInputChange($event)"> </app-date-field>
+</ng-template>
+
+<ng-template #select>
+  <app-select-field [field]="field" (fieldChange)="onInputChange($event)"> </app-select-field>
+</ng-template>

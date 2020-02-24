@@ -1,0 +1,41 @@
+.item {
+  display: flex;
+  flex-direction: row;
+}
+
+.item > div {
+  flex: 1 1;
+}
+
+h2,
+h3 {
+  font-weight: bold;
+}
+
+.espacio-vacio-para-fab {
+  height: 76px;
+}
+
+ion-grid,
+ion-col {
+  padding: 0;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+p {
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.margin {
+  margin: 8px;
+}

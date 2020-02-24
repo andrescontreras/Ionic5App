@@ -23,10 +23,7 @@ export class AccountPage implements OnInit {
       new Field('Phone Number', this.user.phone_number, 'phone_number')
     ];
   };
-  constructor(
-    private userService: UserService,
-    private toastService: ToastService
-  ) {}
+  constructor(private userService: UserService, private toastService: ToastService) {}
 
   ngOnInit() {
     this.initializeFields();
@@ -45,14 +42,11 @@ export class AccountPage implements OnInit {
   };
 
   handleErrorGetUser = (error: any) => {
-    console.log(error);
     this.toastService.presentError('Innesperate error getting the users');
     return throwError('Innesperate error getting the users');
   };
 
   saveData = async () => {
-    console.log(this.fields);
-    console.log(this.user);
     const response = await this.userService
       .putUser(this.user)
       .pipe(catchError(this.handleErrorSaveUser))
@@ -61,7 +55,6 @@ export class AccountPage implements OnInit {
   };
 
   handleErrorSaveUser = (error: any) => {
-    console.log(error);
     this.toastService.presentError('Innesperate error editing the acconut');
     return throwError('Innesperate error editing the acconut');
   };

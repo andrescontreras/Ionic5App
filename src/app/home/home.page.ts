@@ -14,36 +14,36 @@ export class HomePage implements OnInit {
   public appPages = [
     {
       title: 'Pending',
-      url: '/folder/Inbox',
+      url: '/home/listado/pending',
       icon: 'mail'
     },
     {
       title: 'Overdue',
-      url: '/listado',
+      url: '/home/listado/overdue',
       icon: 'paper-plane'
     },
     {
       title: 'Finished',
-      url: '/folder/Favorites',
+      url: '/home/listado/finished',
       icon: 'heart'
-    },
-    {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
-    },
-    {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
     }
+    // {
+    //   title: 'Archived',
+    //   url: '/home//folder/Archived',
+    //   icon: 'archive'
+    // },
+    // {
+    //   title: 'Trash',
+    //   url: '/home/folder/Trash',
+    //   icon: 'trash'
+    // },
+    // {
+    //   title: 'Spam',
+    //   url: '/folder/Spam',
+    //   icon: 'warning'
+    // }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  public labels = ['Loguot', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   constructor(
     private platform: Platform,
@@ -62,7 +62,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('cargo home');
     // const path = window.location.pathname.split('folder/')[1];
     // if (path !== undefined) {
     //   this.selectedIndex = this.appPages.findIndex(
@@ -72,6 +71,6 @@ export class HomePage implements OnInit {
   }
 
   account() {
-    this.router.navigate(['home/account']);
+    // this.router.navigate(['home/account']);
   }
 }

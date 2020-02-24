@@ -50,8 +50,6 @@ export class SignupPage implements OnInit {
     sessionStorage.setItem('User', this.user.username);
     this.authService.loginProccess(response);
 
-    console.log(response);
-
     //this.router.navigate(['index/login']);
   };
 
@@ -80,10 +78,7 @@ export class SignupPage implements OnInit {
     // recorrer todas las llaves y concatenar sus respectivos mensajes
     let stringError = '';
     keys.forEach(key => {
-      stringError =
-        stringError +
-        error.error[key].reduce((message, item) => message + '\n' + item) +
-        '\n';
+      stringError = stringError + error.error[key].reduce((message, item) => message + '\n' + item) + '\n';
     });
     return stringError;
   };

@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse
+} from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task';
@@ -41,8 +46,15 @@ export class TaskService {
     });
   }
 
-  getTask(): Observable<any> {
-    return this.http.get(this.baseUrl, {
+  getTask(): Observable<HttpResponse<Task[]>> {
+    return this.http.get<Task[]>(this.baseUrl, {
+      headers: this.headers,
+      observe: 'response'
+    });
+  }
+
+  getTaskById(id: string): Observable<HttpResponse<Task>> {
+    return this.http.get<Task>(this.baseUrl + id, {
       headers: this.headers,
       observe: 'response'
     });

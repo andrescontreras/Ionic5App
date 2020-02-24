@@ -1,0 +1,6 @@
+<ion-card
+  ><ion-item class="border" (click)="onOpen()" lines="full">
+    <ng-container class="borderI" *ngIf="itemTemplateRef">
+      <ng-container class="borderI" *ngTemplateOutlet="itemTemplateRef; context: { $implicit: item }"></ng-container>
+    </ng-container> </ion-item
+></ion-card>

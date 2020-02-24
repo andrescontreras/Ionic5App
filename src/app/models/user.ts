@@ -13,6 +13,7 @@ export class User {
 
 export class UserAccount {
   constructor(
+    public pk: string = '',
     public username: string = '',
     public first_name: string = '',
     public last_name: string = '',

@@ -1,9 +1,61 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>listado</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-label>Order By</ion-label>
+    <div class="container">
+      <ion-button (click)="changeOrder('name')" size="small">Name</ion-button>
+      <ion-button (click)="changeOrder('due_date')" size="small">Due Date</ion-button>
+      <ion-button (click)="changeOrder('priority')" size="small">Priority</ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <app-item-list [items]="tasks" [itemTemplateRef]="itemTemplateRef" (openItem)="openItem($event)"></app-item-list>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addTask()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ng-template #itemTemplateRef let-item>
+    <!-- <ion-row class="ion-justify-content-between">
+      <ion-label class="ellipsis label ion-padding-end" color="empresas-y-personas-primary">
+        aaa
+        <span class="ellipsis">
+          {{ item?.status }}
+        </span>
+      </ion-label>
+    </ion-row> -->
+    <ion-grid class="margin">
+      <ion-row class="ion-justify-content-between">
+        <ion-label class="ellipsis label ion-padding-end" color="empresas-y-personas-primary">
+          <span class="ellipsis">
+            {{ item?.name }}
+          </span>
+        </ion-label>
+      </ion-row>
+      <ion-row>
+        <p class="ellipsis">
+          Status: {{ item?.status }}
+        </p>
+      </ion-row>
+      <ion-row>
+        <p class="ellipsis">
+          Priority: {{ item?.priority }}
+        </p>
+      </ion-row>
+      <ion-row
+        ><p class="ellipsis">
+          {{ item?.due_date | date: 'dd/MM/yyyy' }}
+        </p>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
 </ion-content>

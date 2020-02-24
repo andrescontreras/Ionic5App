@@ -11,11 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoginPage implements OnInit {
   user: User;
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private spinner: NgxSpinnerService
-  ) {}
+  constructor(private authService: AuthService, private router: Router, private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.user = new User();
@@ -28,13 +24,11 @@ export class LoginPage implements OnInit {
       console.log('DATOS VACIOS');
     }
 
-    console.log('aaaaa');
     this.spinner.show();
     this.authService
       .login(this.user)
       .toPromise()
       .then(response => {
-        console.log(response);
         this.router.navigate(['/home']);
         this.spinner.hide();
       })
