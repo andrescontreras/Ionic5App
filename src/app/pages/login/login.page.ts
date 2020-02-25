@@ -15,8 +15,8 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.user = new User();
-    this.user.username = 'andres';
-    this.user.password = 'Af123456';
+    this.user.username = '';
+    this.user.password = '';
   }
 
   login = () => {
@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
       .login(this.user)
       .toPromise()
       .then(response => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home/listado/pending']);
         this.spinner.hide();
       })
       .catch(response => {

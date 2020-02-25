@@ -1,6 +1,9 @@
 <ion-card
-  ><ion-item class="border" (click)="onOpen()" lines="full">
+  ><ion-item class="border" lines="full" (click)="onOpen()">
     <ng-container class="borderI" *ngIf="itemTemplateRef">
       <ng-container class="borderI" *ngTemplateOutlet="itemTemplateRef; context: { $implicit: item }"></ng-container>
-    </ng-container> </ion-item
+    </ng-container>
+    <ion-button class="boton-more" fill="clear" (click)="presentPopover($event); $event.stopPropagation()">
+      <ion-icon name="ellipsis-vertical-sharp"></ion-icon>
+    </ion-button> </ion-item
 ></ion-card>

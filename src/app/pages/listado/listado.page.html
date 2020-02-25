@@ -3,10 +3,10 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>listado</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-label>Order By</ion-label>
+    <ion-label class="titleFilter">Order By</ion-label>
     <div class="container">
       <ion-button (click)="changeOrder('name')" size="small">Name</ion-button>
       <ion-button (click)="changeOrder('due_date')" size="small">Due Date</ion-button>
@@ -16,7 +16,20 @@
 </ion-header>
 
 <ion-content>
-  <app-item-list [items]="tasks" [itemTemplateRef]="itemTemplateRef" (openItem)="openItem($event)"></app-item-list>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down-circle-sharp"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing..."
+    ></ion-refresher-content>
+  </ion-refresher>
+  <app-item-list
+    [items]="tasks"
+    [itemTemplateRef]="itemTemplateRef"
+    (openItem)="openItem($event)"
+    (deleteItem)="deleteItem($event)"
+  ></app-item-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addTask()">

@@ -5,6 +5,8 @@ import { throwError } from 'rxjs';
 import { UserAccount } from 'src/app/models/user';
 import { Field } from 'src/app/models/field';
 import { ToastService } from 'src/app/services/toast.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-account',
@@ -23,7 +25,12 @@ export class AccountPage implements OnInit {
       new Field('Phone Number', this.user.phone_number, 'phone_number')
     ];
   };
-  constructor(private userService: UserService, private toastService: ToastService) {}
+  constructor(
+    private userService: UserService,
+    private toastService: ToastService,
+    private spinner: NgxSpinnerService,
+    private menu: MenuController
+  ) {}
 
   ngOnInit() {
     this.initializeFields();
@@ -31,6 +38,7 @@ export class AccountPage implements OnInit {
   }
 
   initializeFields = async () => {
+    this.spinner.show();
     const response = await this.userService
       .getUser()
       .pipe(catchError(this.handleErrorGetUser))
@@ -39,6 +47,7 @@ export class AccountPage implements OnInit {
     const username = sessionStorage.getItem('User');
     this.user = response.body.find(e => e.username === username);
     this.setFields();
+    this.spinner.hide();
   };
 
   handleErrorGetUser = (error: any) => {
@@ -47,11 +56,13 @@ export class AccountPage implements OnInit {
   };
 
   saveData = async () => {
+    this.spinner.show();
     const response = await this.userService
       .putUser(this.user)
       .pipe(catchError(this.handleErrorSaveUser))
       .toPromise();
     this.toastService.presentSuccess('Account edit successfully');
+    this.spinner.hide();
   };
 
   handleErrorSaveUser = (error: any) => {

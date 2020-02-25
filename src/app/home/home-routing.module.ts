@@ -13,10 +13,6 @@ const routes: Routes = [
         loadChildren: () => import('../pages/folder/folder.module').then(m => m.FolderPageModule)
       },
       {
-        path: '',
-        loadChildren: () => import('../pages/bienvenida/bienvenida.module').then(m => m.BienvenidaPageModule)
-      },
-      {
         path: 'listado/:id',
         loadChildren: () => import('../pages/listado/listado.module').then(m => m.ListadoPageModule)
       },

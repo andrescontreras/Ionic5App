@@ -1,5 +1,10 @@
 <ion-list>
   <ng-container *ngFor="let item of items">
-    <app-item [item]="item" [itemTemplateRef]="itemTemplateRef" (open)="open($event)"></app-item>
+    <app-item
+      [item]="item"
+      [itemTemplateRef]="itemTemplateRef"
+      (open)="open($event)"
+      (deleteItem)="delete($event)"
+    ></app-item>
   </ng-container>
 </ion-list>

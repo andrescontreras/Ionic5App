@@ -8,6 +8,7 @@ import { ItemComponent } from './item/item.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { DateFieldComponent } from './field/date-field/date-field.component';
 import { SelectFieldComponent } from './field/select-field/select-field.component';
+import { OptionsListComponent } from './options-list/options-list.component';
 @NgModule({
   declarations: [
     FieldComponent,
@@ -15,7 +16,8 @@ import { SelectFieldComponent } from './field/select-field/select-field.componen
     ItemComponent,
     ItemListComponent,
     DateFieldComponent,
-    SelectFieldComponent
+    SelectFieldComponent,
+    OptionsListComponent
   ],
   exports: [
     FieldComponent,
@@ -23,8 +25,10 @@ import { SelectFieldComponent } from './field/select-field/select-field.componen
     ItemComponent,
     ItemListComponent,
     DateFieldComponent,
-    SelectFieldComponent
+    SelectFieldComponent,
+    OptionsListComponent
   ],
-  imports: [CommonModule, FormsModule, IonicModule]
+  imports: [CommonModule, FormsModule, IonicModule],
+  entryComponents: [OptionsListComponent]
 })
 export class ComponentsModule {}

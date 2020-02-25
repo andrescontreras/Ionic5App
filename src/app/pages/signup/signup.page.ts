@@ -25,10 +25,10 @@ export class SignupPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user.username = 'andres';
-    this.user.email = 'andres@email.com';
-    this.user.password1 = 'Af123456';
-    this.user.password2 = 'Af123456';
+    this.user.username = '';
+    this.user.email = '';
+    this.user.password1 = '';
+    this.user.password2 = '';
   }
 
   createAccount = async () => {

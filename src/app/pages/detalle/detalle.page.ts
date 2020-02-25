@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 import { InputType } from 'src/app/enums/input-type.enum';
 import { Status } from 'src/app/enums/status.enum';
 import { Priority } from 'src/app/enums/priority.enum';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-detalle',
@@ -48,7 +49,8 @@ export class DetallePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private taskService: TaskService,
     private toastService: ToastService,
-    private userService: UserService
+    private userService: UserService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -56,6 +58,7 @@ export class DetallePage implements OnInit {
   }
 
   getTask = async () => {
+    this.spinner.show();
     this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
     if (this.taskId === 'new') {
       this.defaultData();
@@ -68,19 +71,33 @@ export class DetallePage implements OnInit {
     }
     await this.getUsers();
     await this.setFields();
+    this.spinner.hide();
   };
 
   handleErrorGetTask = (error: any) => {
+    this.spinner.hide();
     this.toastService.presentError('Innesperate error getting task');
     return throwError('Innesperate error getting task');
   };
 
   saveData = async () => {
-    this.validateData();
-    const response = await this.taskService
-      .postTask(this.task)
-      .pipe(catchError(this.handleErrorPostTask))
-      .toPromise();
+    this.task.realization_date = new Date(this.task.realization_date).toISOString();
+    this.spinner.show();
+    if (this.taskId !== 'new') {
+      this.validateData();
+      const response = await this.taskService
+        .putTask(this.task)
+        .pipe(catchError(this.handleErrorPostTask))
+        .toPromise();
+    } else {
+      this.validateData();
+      const response = await this.taskService
+        .postTask(this.task)
+        .pipe(catchError(this.handleErrorPostTask))
+        .toPromise();
+    }
+    this.toastService.presentSuccess('Task updated successfully');
+    this.spinner.hide();
   };
 
   validateData = () => {
@@ -96,6 +113,7 @@ export class DetallePage implements OnInit {
   };
 
   handleErrorPostTask = (error: any) => {
+    this.spinner.hide();
     this.toastService.presentError('Innesperate error saving task');
     return throwError('Innesperate error saving task');
   };
@@ -109,6 +127,7 @@ export class DetallePage implements OnInit {
   };
 
   handleErrorGetUser = (error: any) => {
+    this.spinner.hide();
     this.toastService.presentError('Innesperate error getting the users');
     return throwError('Innesperate error getting the users');
   };
@@ -126,7 +145,10 @@ export class DetallePage implements OnInit {
         .toJSON()
         .slice(0, 10)
         .replace(/-/g, '/'),
-      null
+      new Date()
+        .toJSON()
+        .slice(0, 10)
+        .replace(/-/g, '/')
     );
   };
 

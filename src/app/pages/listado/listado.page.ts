@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 import { Task } from 'src/app/models/task';
 import { Priority } from 'src/app/enums/priority.enum';
 import { Status } from 'src/app/enums/status.enum';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-listado',
@@ -18,20 +19,39 @@ export class ListadoPage implements OnInit {
   tasks: Task[] = [];
   deccending = false;
   order = 'name';
+  title = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private taskService: TaskService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
     this.filter = this.activatedRoute.snapshot.paramMap.get('id');
+    switch (this.filter) {
+      case 'pending':
+        this.title = 'Pending Task';
+        break;
+      case 'overdue':
+        this.title = 'Overdue Task';
+        break;
+      case 'finished':
+        this.title = 'Finished Task';
+        break;
+    }
     this.getTask();
   }
 
+  doRefresh = async event => {
+    await this.getTask();
+    event.target.complete();
+  };
+
   getTask = async () => {
+    this.spinner.show();
     const response = await this.taskService
       .getTask()
       .pipe(catchError(this.handleErrorGetTask))
@@ -40,7 +60,8 @@ export class ListadoPage implements OnInit {
     this.tasks = response.body.filter(item => item.status === this.filter);
     this.tasks.forEach(task => {
       task.priority = Priority[task.priority];
-      task.status = Status[task.status];
+      task.status = Status[Status[task.status]];
+      this.spinner.hide();
     });
   };
 
@@ -53,17 +74,37 @@ export class ListadoPage implements OnInit {
     this.router.navigate(['/home/detalle/' + item.pk]);
   };
 
+  deleteItem = (item: Task) => {
+    this.spinner.show();
+    const task = this.tasks.find(task => item.pk === task.pk);
+    this.taskService
+      .deleteTask(task.pk)
+      .pipe(catchError(this.handleErrorDeleteTask))
+      .toPromise();
+    this.toastService.presentSuccess('Task deleted successfully');
+    this.spinner.hide();
+    // actualizar elementos
+    this.getTask();
+  };
+
+  handleErrorDeleteTask = (error: any) => {
+    this.toastService.presentError('Innesperate error getting task');
+    return throwError('Innesperate error getting task');
+  };
+
   addTask = () => {
     this.router.navigate(['/home/detalle/new']);
   };
 
   changeOrder = (order: string) => {
+    this.spinner.show();
     if (this.order === order) {
       this.deccending = !this.deccending;
     } else {
       this.order = order;
     }
     this.sortTask();
+    this.spinner.hide();
   };
 
   sortTask = () => {

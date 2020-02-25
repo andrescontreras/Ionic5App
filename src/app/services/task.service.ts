@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-  HttpResponse
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task';
@@ -26,20 +21,20 @@ export class TaskService {
   }
 
   putTask(task: Task): Observable<any> {
-    return this.http.put(this.baseUrl, task, {
+    return this.http.put(this.baseUrl + task.pk, task, {
       headers: this.headers,
       observe: 'response'
     });
   }
 
   patchTask(task: Task): Observable<any> {
-    return this.http.patch(this.baseUrl, task, {
+    return this.http.patch(this.baseUrl + task.pk, task, {
       headers: this.headers,
       observe: 'response'
     });
   }
 
-  deleteTask(id: number): Observable<any> {
+  deleteTask(id: string): Observable<any> {
     return this.http.delete(this.baseUrl + id, {
       headers: this.headers,
       observe: 'response'

@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  TemplateRef,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-item-list',
@@ -16,11 +9,16 @@ export class ItemListComponent implements OnInit {
   @Input() items;
   @Input() itemTemplateRef: TemplateRef<any>;
   @Output() openItem = new EventEmitter();
+  @Output() deleteItem = new EventEmitter();
   constructor() {}
 
   ngOnInit() {}
 
   open = item => {
     this.openItem.emit(item);
+  };
+
+  delete = item => {
+    this.deleteItem.emit(item);
   };
 }

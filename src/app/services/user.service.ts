@@ -15,7 +15,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   putUser(user: UserAccount): Observable<any> {
-    return this.http.put(this.baseUrl, user, {
+    return this.http.put(this.baseUrl + user.pk, user, {
       headers: this.headers,
       observe: 'response'
     });
