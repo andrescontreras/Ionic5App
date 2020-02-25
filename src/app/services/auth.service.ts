@@ -17,11 +17,7 @@ export class AuthService {
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
-  constructor(
-    private loginService: LoginService,
-    private router: Router,
-    private toastService: ToastService
-  ) {}
+  constructor(private loginService: LoginService, private router: Router, private toastService: ToastService) {}
 
   login(user: User) {
     return this.loginService.login(user).pipe(
@@ -60,7 +56,6 @@ export class AuthService {
   }
 
   setIsLoggedIn(isLoggedIn: boolean) {
-    console.log('ROUTE: ', this.router.url);
     if (isLoggedIn) {
       this.isLoggedIn = true;
       // this.router.navigate(['/servicios']);

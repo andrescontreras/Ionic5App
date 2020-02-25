@@ -66,6 +66,7 @@ export class ListadoPage implements OnInit {
   };
 
   handleErrorGetTask = (error: any) => {
+    this.spinner.hide();
     this.toastService.presentError('Innesperate error getting task');
     return throwError('Innesperate error getting task');
   };
@@ -88,6 +89,7 @@ export class ListadoPage implements OnInit {
   };
 
   handleErrorDeleteTask = (error: any) => {
+    this.spinner.hide();
     this.toastService.presentError('Innesperate error getting task');
     return throwError('Innesperate error getting task');
   };

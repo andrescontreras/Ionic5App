@@ -37,8 +37,6 @@ export class SignupPage implements OnInit {
       this.toastService.presentError('Los datos ingresados son invalidos');
       return;
     }
-
-    console.log('Correcto');
     this.spinner.show();
     const response = await this.loginService
       .registration(this.user)

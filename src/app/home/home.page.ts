@@ -60,6 +60,5 @@ export class HomePage implements OnInit {
 
   async getUser() {
     this.username = await this.userService.getCurrentUser();
-    console.log(this.username);
   }
 }
